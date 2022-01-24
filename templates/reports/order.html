@@ -1,0 +1,58 @@
+{% extends 'reports/base.html' %}
+
+
+
+{% block breadcrumb %}
+<li class="breadcrumb-item"><a href="{% url 'home'  %}">Restaurant</a></li>
+<li class="breadcrumb-item"><a href="{% url 'order_item'  %}">Select Item</a></li>
+<li class="breadcrumb-item active">Place An Order</li>
+{% endblock %}
+
+{% block content %}
+<h5 class="text-center alert alert-info">Ordered Items</h5>
+<table class="table">
+    <thead class="thead-light">
+      <tr>
+        
+        <th scope="col">Item Name</th>
+        <th scope="col">Quantity</th>
+        <th scope="col">Price</th>
+      </tr>
+    </thead>
+    <tbody>
+ {% for order_item in items %}
+
+<tr>
+        
+    <td>{{order_item.item.name}}</td>
+    <td>{{order_item.quantity}}</td>
+    <td>{{order_item.price}} Rs.</td>
+  </tr>
+
+{% endfor %}  
+</tbody>
+</table>
+<h5 class="text-center alert alert-info">Total Payable Amount - Rs. {{total}}</h5>
+<div class="container mb-4">
+<form method = "post">
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="name">Customer Name</label>
+        <input type="text" class="form-control" id="name" name="cname"  value="{{customer.name}}">
+        <small id="name_help" class="form-text text-muted">Edit if you want to change your Name.</small>
+      </div>
+      <div class="form-group">
+        <label for="contact">Customer Contact</label>
+        <input type="text" class="form-control" id="contact" name="ccontact"  value="{{customer.contact}}">
+        <small id="contact_help" class="form-text text-muted">Edit if you want to change your Contact Detail.</small>
+      </div>
+      <div class="form-group">
+        <label for="address">Customer Address</label>
+        <input type="text" class="form-control" id="address" name="caddress"  value="{{customer.address}}">
+        <small id="address_help" class="form-text text-muted">Edit if you want to change your Addrees.</small>
+      </div>
+    
+    <button type="submit" class="btn btn-success btn-md">Place Order</button>
+  </form>
+</div>
+{% endblock %}

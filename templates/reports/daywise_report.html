@@ -1,0 +1,57 @@
+{% extends 'reports/base.html' %}
+
+
+
+{% block breadcrumb %}
+<li class="breadcrumb-item"><a href="{% url 'home'  %}">Restaurant</a></li>
+<li class="breadcrumb-item"><a href="{% url 'reports'  %}">Reports</a></li>
+<li class="breadcrumb-item active">Day Wise Reports</li>
+{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+  <a href="#" style="margin: 5px; margin-left: 0px"><button type="button" class="btn btn-info">Day Wise Reports</button></a>
+  <a href="{% url 'cat_reports' %}" style="margin: 5px"><button type="button" class="btn btn-outline-info">Category Reports</button></a>
+  <a href="{% url 'subcat_reports' %}" style="margin: 5px"><button type="button" class="btn btn-outline-info">Sub Category Reports</button></a>
+  <a href="{% url 'itemwise_reports' %}" style="margin: 5px"><button type="button" class="btn btn-outline-info">Item Wise Reports</button></a>
+  <a href="{% url 'daypart_reports' %}" style="margin: 5px"><button type="button" class="btn btn-outline-info">Day Part Reports</button></a>
+</div>
+<form method="post" class="mb-4" novalidate>
+  {% csrf_token %}
+  {{ form }}
+<button type="submit" class="btn btn-success">Get Report</button>
+</form>
+
+
+{% if orders %}
+<h5 class="text-center alert alert-danger">Day Wise Report For {{month}} Month</h5>
+<h5 class="text-center alert alert-info">Total Sales : <b>{{total}} Rs.</b></h5>
+<h5 class="text-center alert alert-info">Total Orders : <b>{{count}}</b></h5>
+<table class="table">
+    <thead class="thead-light">
+      <tr>
+        
+        <th scope="col">Date</th>
+        <th scope="col">Order Count</th>
+        <th scope="col">Total Sales</th>
+      </tr>
+    </thead>
+    <tbody>
+
+{% for order in orders %}
+
+      <tr>
+        
+        <td>{{order.day}}</td>
+        <td>{{order.count}}</td>
+        <td>{{order.total}} Rs.</td>
+      </tr>
+
+{% endfor %}  
+    </tbody>
+  </table>
+{% else %}
+  <p class="alert alert-info">No Reports Yet</p>
+{% endif %}
+</div>
+{% endblock %}

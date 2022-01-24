@@ -1,0 +1,60 @@
+{% extends 'reports/base.html' %}
+
+{% load cart %}
+
+{% block breadcrumb %}
+<li class="breadcrumb-item"><a href="{% url 'home'  %}">Restaurant</a></li>
+<li class="breadcrumb-item active">Item</li>
+{% endblock %}
+
+{% block content %}
+
+
+
+<h4 class="text-center alert alert-info">Select Order Items</h4>
+<div id="products" class="col-lg-12">
+<div class="row mx-auto">
+{% for item in items %}
+<div class="card mx-auto mb-4 bg-dark" style="width: 13.5rem;">
+    <img class="card-img-top hover_img" src="{{item.image.url}}" alt="Card image cap" >
+    <div class="card-body ">
+        <p class="card-title text-white">{{item.name}}</p>
+        <p class="card-text text-white"><i class="fas fa-dollar-sign" style="margin-right: 2px; font-size: 15px;"></i>Rs. {{item.price}}</p>
+        {% if item.id|is_in_cart:request.session.cart %}
+        <div class="row no-gutters">
+            <form action="" method="post" class="col-lg-2">
+                {% csrf_token %}
+                <input hidden type="text" value="{{item.id}}" name="item">
+                <input hidden type="text" value="True" name="remove">
+                <input type="submit" value="-" class="btn btn-dark btn-block">
+            </form>
+            <div class=" text-center mt-2 col text-white">{{item.id|cart_quantity:request.session.cart}} in Cart</div>
+            {% comment %} <input type="submit" value="+" class="col-lg-2 btn btn-dark btn-block"> {% endcomment %}
+            <form action="" method="post" class="col-lg-2">
+                {% csrf_token %}
+                <input hidden type="text" value="{{item.id}}" name="item">
+                <input hidden type="text" value="True" name="increase">
+                <input type="submit" value="+" class="btn btn-dark btn-block">
+            </form>
+        </div>
+        {% else %}
+        <form method="post">
+            {% csrf_token %}
+            <input hidden type="text" value="{{item.id}}" name="item">
+            <input type="submit" class="btn btn-primary btn-sm" value="Add to Cart">
+        </form>
+        {% endif %}
+    </div>
+</div>
+    {% endfor %}
+</div>
+</div>
+{% if request.session.cart %}
+{% if request.user.is_authenticated %}
+<a href="{% url 'order' %}" style="margin: 5px"><button type="button" class="btn btn-success btn-lg">Confirm Order</button></a>
+{% else %}
+<p class="alert-danger">Please Login/Signup to place orders</p>
+{% endif %}
+{% endif %}
+</div>
+{% endblock %}

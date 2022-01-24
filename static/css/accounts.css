@@ -1,0 +1,18 @@
+body {
+    background-image: url('../img/home.jpg');
+    
+  }
+
+
+.logo a {
+    color: rgba(20, 155, 20, 0.9);
+}
+  
+.logo a:hover,
+.logo a:active {
+    text-decoration: none;
+}
+
+.card-title {
+    text-align: center;
+}

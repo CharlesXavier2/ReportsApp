@@ -1,0 +1,44 @@
+{% extends 'reports/base.html' %}
+
+
+
+{% block breadcrumb %}
+<li class="breadcrumb-item"><a href="{% url 'home'  %}">Restaurant</a></li>
+<li class="breadcrumb-item active">Reports</li>
+{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+        <a href="{% url 'daywise_reports' %}" style="margin: 5px; margin-left: 0px"><button type="button" class="btn btn-outline-info">Day Wise Reports</button></a>
+        <a href="{% url 'cat_reports' %}" style="margin: 5px"><button type="button" class="btn btn-outline-info">Category Reports</button></a>
+        <a href="{% url 'subcat_reports' %}" style="margin: 5px"><button type="button" class="btn btn-outline-info">Sub Category Reports</button></a>
+        <a href="{% url 'itemwise_reports' %}" style="margin: 5px"><button type="button" class="btn btn-outline-info">Item Wise Reports</button></a>
+        <a href="{% url 'daypart_reports' %}" style="margin: 5px"><button type="button" class="btn btn-outline-info">Day Part Reports</button></a>
+    
+</div>
+<h4 class="text-center alert alert-info">Total Sales - Rs. {{sales}}</h4>
+<h4 class="text-center alert alert-danger">Orders - {{count}}</h4>
+
+{% comment %} {% for order in orders %}
+<ul class="list-group">
+    <li class="list-group-item list-group-item-action list-group-item-dark d-flex justify-content-between align-items-center mt-4">
+    Ordered By : {{order.user.username|capfirst}} 
+    <div class="col-3">
+        <span class="badge badge-pill badge-secondary">{{ order.created_at }}</span>
+      </div>
+     <span class="badge badge-pill badge-success">Amount : {{order.get_total_price}} Rs.</span>
+     
+    </li>
+
+
+{% for item in order.items.all %}
+    <ul class="list-group">
+        <li class="list-group-item d-flex justify-content-between align-items-center ">
+         Item : {{item.item.name}} - Price : {{item.item.price}}Rs.
+          <small>Quantity : <span class="badge badge-primary badge-pill">{{item.quantity}}</span></small>
+        </li>
+     {% endfor %} 
+
+     {% endfor %} {% endcomment %}
+    
+{% endblock %}

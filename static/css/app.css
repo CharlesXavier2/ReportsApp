@@ -1,0 +1,41 @@
+.topnav {
+    background-color: #a685fa;
+}
+
+.navbar-brand {
+    font-family: 'Arvo', serif;
+}
+
+.body{
+    margin: auto;
+    font-size: 14px;
+}
+
+.home-banner 
+    {
+        background-image: url('../img/home.jpg');
+      }
+
+.home-img {
+    opacity : 0.7
+}
+.homebtn1 {
+    width: 60%;
+    margin-top: 10%;
+    margin-left: 18%;
+    margin-bottom: 2%;
+    font-size: 3em;
+}
+.homebtn2 {
+    width: 60%;
+    margin-top: 2%;
+    margin-left: 18%;
+    margin-bottom: 4%;
+    font-size: 3em;
+}
+.error {
+    color : #e83e8c
+}
+.info {
+    color : #17a2b8
+}
