@@ -34,6 +34,9 @@ class OrderForm(forms.ModelForm) :
         model = Order
         fields = ['items']
 
+
+
+
 class CustomerUpdateForm(forms.ModelForm) : 
     class Meta :
         model = Customer

@@ -9,6 +9,7 @@
 {% endblock %}
 
 {% block content %}
+{% if customer.name != "" %}
 <h4 class="text-center alert alert-primary"> Current Details </h4>
 <table class="table">
     <thead>
@@ -28,6 +29,7 @@
         
     </tbody>
   </table>
+  {% endif %}
 <h4 class="text-center alert alert-info"> Update Details </h4>
 <div class="container mb-4">
     <form method = "post" novalidate>

@@ -36,6 +36,8 @@ def customer(request) :
     count = len(orders)
     return render(request, 'reports/customer.html', {'customer' : customer, 'count':count, 'orders': orders})
 
+
+
 class CustomerUpdateView(View) :
     def get(self, request, *args, **kwargs) :
         customer = request.user.customer
@@ -50,14 +52,17 @@ class CustomerUpdateView(View) :
             contact = form.cleaned_data['contact']
             address = form.cleaned_data['address']
             c = Customer.objects.get(user = request.user)
+            
             c.name = name
             c.contact = contact
             c.address = address
             c.save()
+        
             return redirect('customer')
         else :
             print(form.errors)
             return render(request, 'reports/customer_update.html', {'customer':customer, 'form': form}) 
+
 
 item_list = []
 def order_item(request) :
@@ -357,6 +362,12 @@ def signup(request) :
         signup_form = SignUpForm(request.POST)
         if signup_form.is_valid() : 
             user = signup_form.save()
+            Customer.objects.create(
+                name = "",
+                user = user,
+                contact = "",
+                address = ""
+            )
             login(request, user)
             return redirect('home')
     else:

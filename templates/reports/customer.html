@@ -27,9 +27,15 @@
       
   </tbody>
 </table>
+{% if customer.name == "" %}
+<a href="{% url 'customer_update' %}" >
+  <button type="button" class="btn btn-info btn-sm" style="margin-bottom: 25px">Add Customer Details</button>
+</a>
+{% else %}
 <a href="{% url 'customer_update' %}" >
   <button type="button" class="btn btn-info btn-sm" style="margin-bottom: 25px">Change Details</button>
 </a>
+{% endif %}
 <h4 class="text-center alert alert-danger">Orders Placed - {{count}} </h4>
 
 
