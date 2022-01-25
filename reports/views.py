@@ -112,9 +112,6 @@ class OrderView(View) :
                 'price' : quantity * item.price
             })
             total +=quantity * item.price
-        print(customer)
-        print(cart)
-        print(timezone.now())
         return render(request, 'reports/order.html', {'customer': customer, 'items' : items, 'total': total})
 
     def post(self, request, *args, **kwargs) :
@@ -359,6 +356,7 @@ def login_user(request) :
 def logout_user(request) :
     if request.user.is_authenticated :
         logout(request)
+        request.session.clear_expired()
         return redirect('home')
     else :
         return redirect('login')
