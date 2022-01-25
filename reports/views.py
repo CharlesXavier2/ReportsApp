@@ -18,7 +18,7 @@ from .utils import MONTH_CHOICES, YEAR_CHOICES, DAYPART_CHOICES, DAYPART_RANGES
 # Create your views here.
 
 from .models import Category, SubCategory, Item, Order, OrderItem, Customer
-from .forms import OrderItemForm, OrderForm, SignUpForm, LoginForm, DayWiseForm
+from .forms import OrderItemForm, OrderForm, SignUpForm, LoginForm, DayWiseForm, CustomerUpdateForm
 def home(request) :
     c = Customer.objects.all()
     print(c)
@@ -35,6 +35,30 @@ def customer(request) :
     orders = Order.objects.filter(user = user).order_by('-created_at')
     count = len(orders)
     return render(request, 'reports/customer.html', {'customer' : customer, 'count':count, 'orders': orders})
+
+class CustomerUpdateView(View) :
+    def get(self, request, *args, **kwargs) :
+        customer = request.user.customer
+        form = CustomerUpdateForm()
+        return render(request, 'reports/customer_update.html', {'customer':customer, 'form': form})
+
+    def post(self, request, *args, **kwargs) :
+        customer = request.user.customer
+        form = CustomerUpdateForm(request.POST)
+        if form.is_valid() :
+            name = form.cleaned_data['name']
+            contact = form.cleaned_data['contact']
+            address = form.cleaned_data['address']
+            c = Customer.objects.get(user = request.user)
+            c.name = name
+            c.contact = contact
+            c.address = address
+            c.save()
+            return redirect('customer')
+        else :
+            print(form.errors)
+            return render(request, 'reports/customer_update.html', {'customer':customer, 'form': form}) 
+
 item_list = []
 def order_item(request) :
     user = request.user

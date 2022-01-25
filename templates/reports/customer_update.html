@@ -1,0 +1,59 @@
+{% extends 'reports/base.html' %}
+
+
+
+{% block breadcrumb %}
+<li class="breadcrumb-item"><a href="{% url 'home'  %}">Restaurant</a></li>
+<li class="breadcrumb-item"><a href="{% url 'customer'  %}">Customer</a></li>
+<li class="breadcrumb-item active">Update Customer Details</li>
+{% endblock %}
+
+{% block content %}
+<h4 class="text-center alert alert-primary"> Current Details </h4>
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Contact No.</th>
+        <th scope="col">Address</th>
+      </tr>
+    </thead>
+    <tbody>  
+        <tr>
+          
+            <td>{{customer.name}}</td>
+          <td>{{customer.contact}}</td>
+          <td>{{customer.address}}</td>
+        </tr>
+        
+    </tbody>
+  </table>
+<h4 class="text-center alert alert-info"> Update Details </h4>
+<div class="container mb-4">
+    <form method = "post" novalidate>
+        {% csrf_token %}
+        {% if form.errors %}
+        {% for field in form %}
+        <div class="form-group">
+            {% for error in field.errors %}
+            <div class="invalid-feedback" style="display:block">
+                {{ error }}
+            </div>
+            {% endfor %}
+            {{field.label_tag}} {{field}}
+          </div>
+        {% endfor %}  
+        {% else %}
+        {% for field in form %}
+        <div class="form-group">
+            
+            {{field.label_tag}} {{field}}
+          </div>
+        {% endfor %}  
+        {% endif %}
+
+        <button type="submit" class="btn btn-success btn-md">Update</button>
+      </form>
+    </div>
+    
+{% endblock %}

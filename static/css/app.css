@@ -17,7 +17,7 @@
       }
 
 .home-img {
-    opacity : 0.7
+    opacity : 0.2
 }
 .homebtn1 {
     width: 60%;
@@ -25,6 +25,7 @@
     margin-left: 18%;
     margin-bottom: 2%;
     font-size: 3em;
+    border-radius: 20px;
 }
 .homebtn2 {
     width: 60%;
@@ -32,6 +33,7 @@
     margin-left: 18%;
     margin-bottom: 4%;
     font-size: 3em;
+    border-radius: 20px;
 }
 .error {
     color : #e83e8c

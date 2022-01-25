@@ -2,7 +2,7 @@ from django import forms
 from django.core.exceptions import ValidationError
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from .models import OrderItem, Order
+from .models import OrderItem, Order, Customer
 
 
 
@@ -33,6 +33,12 @@ class OrderForm(forms.ModelForm) :
     class Meta :
         model = Order
         fields = ['items']
+
+class CustomerUpdateForm(forms.ModelForm) : 
+    class Meta :
+        model = Customer
+        fields = ['name', 'contact', 'address']
+
 
 # iterable 
 YEAR_CHOICES = (

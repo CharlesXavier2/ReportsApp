@@ -19,7 +19,7 @@
   {{ field }}
 </ul>
   {% for error in field.errors %}
-    <div class="invalid-feedback">
+    <div class="invalid-feedback" style="display:block">
       {{ error }}
     </div>
   {% endfor %}
@@ -30,3 +30,4 @@
   {% endif %}
 </div>
 {% endfor %}
+
