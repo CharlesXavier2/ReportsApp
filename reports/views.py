@@ -375,6 +375,10 @@ def signup(request) :
     return render(request, 'reports/signup.html', {'form': signup_form})
 
 def login_user(request) :
+    next = ""
+
+    if request.GET:  
+        next = request.GET['next']
     if request.method == "POST" :
         login_form = AuthenticationForm(request = request, data=request.POST)
         if login_form.is_valid() : 
@@ -383,7 +387,10 @@ def login_user(request) :
             user = authenticate(username = uname, password = upass)
             if user is not None :
                 login(request, user)
-                return redirect('home')
+                if next == "" :
+                    return redirect('home')
+                else : 
+                    return redirect(next)
     else:
         login_form = AuthenticationForm()
     return render(request, 'reports/login.html', {'form': login_form})
