@@ -18,7 +18,22 @@
 </div>
 <h5 class="text-center alert alert-danger">Category Sales Report</h5>
 <h5 class="text-center alert alert-info">Total Sales : <b>{{total_sales}} Rs.</b></h5>
+
+<div class="row mb-4">
+<div id="container" style="width: 45%;">
+  <canvas id="pie-chart"></canvas>
+</div>
+
+
+<script>
+  var labels = {{labels|safe}}
+  var data = {{data|safe}}
+  
+</script>
+
+
 {% if reports %}
+<div id="container" style="width: 55%;">
 <table class="table">
     <thead class="thead-light">
       <tr>
@@ -45,5 +60,6 @@
 {% else %}
   <p class="alert alert-info">No Reports Yet</p>
 {% endif %}
+</div>
 </div>
 {% endblock %}

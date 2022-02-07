@@ -175,13 +175,13 @@ def reports(request) :
     user = request.user
     if user.is_staff == True :
         total_sales = 0
-
+        
         orders = Order.objects.order_by('-created_at')
         count = len(orders)
         for order in orders :
             total_sales += order.get_total_price()
             
-        return render(request, 'reports/reports.html', {'user' : user, 'sales' : total_sales, 'count': count})
+        return render(request, 'reports/reports.html', {'user' : user, 'sales' : total_sales, 'count': count })
     else :
         msg1 = "Not Authorised"
         msg2 ='Only Staffs are permitted to view reports. Please login with a staff account'
@@ -244,7 +244,8 @@ def cat_report(request) :
     if user.is_staff == True :
         reports = []
         total_sales = 0
-        
+        labels = []
+        data = []
         cats = Category.objects.all()
         for cat in cats :
             sub_sales = 0
@@ -268,8 +269,10 @@ def cat_report(request) :
                 'quantity' : sub_quantity,
                 'sales' : sub_sales
             })
-        print(reports)
-        return render(request, 'reports/cat_report.html', {'reports': reports, 'total_sales': total_sales})
+            labels.append(cat.name)
+            data.append(float(sub_sales))
+        print(data)
+        return render(request, 'reports/cat_report.html', {'reports': reports, 'total_sales': total_sales, 'labels':labels, 'data':data})
     else :
         return redirect('login')
 
@@ -278,6 +281,8 @@ def item_wise_report(request) :
     if user.is_staff == True :
         reports = []
         total_sales = 0
+        labels = []
+        data = []
         items = Item.objects.all()
         for item in items :
             quantity = 0
@@ -293,8 +298,10 @@ def item_wise_report(request) :
                 'quantity' : quantity,
                 'sales' : sales
             })
+            labels.append(item.name)
+            data.append(float(sales))
         print(reports)
-        return render(request, 'reports/itemwise_report.html', {'reports': reports, 'total_sales': total_sales})
+        return render(request, 'reports/itemwise_report.html', {'reports': reports, 'total_sales': total_sales,'labels':labels, 'data':data})
     else :
         return redirect('login')
 
@@ -303,6 +310,8 @@ def subcat_report(request) :
     if user.is_staff == True :
         reports = []
         total_sales = 0
+        labels = []
+        data = []
         subcats = SubCategory.objects.all()
         for subcat in subcats :
             items = subcat.items.all()
@@ -320,8 +329,10 @@ def subcat_report(request) :
                     'quantity' : quantity,
                     'sales' : sales
                 })
+                labels.append(subcat.name)
+                data.append(float(sales))
         print(reports)
-        return render(request, 'reports/subcat_report.html', {'reports': reports, 'total_sales': total_sales})
+        return render(request, 'reports/subcat_report.html', {'reports': reports, 'total_sales': total_sales,'labels':labels, 'data':data})
     else :
         return redirect('login')
 
@@ -329,6 +340,8 @@ def daypart_report(request) :
     #data = Order.m_objects.get_day_set(1)
     data = Order.objects.values('created_at__day').annotate(x = Sum('items__item__price'))
     total_sales= 0
+    labels = []
+    data = []
     i = 1
     order_list = []
     while i <= 4 :
@@ -345,16 +358,20 @@ def daypart_report(request) :
                 'sales' : sales,
             })
             total_sales += sales
+            labels.append(DAYPART_CHOICES[i])
+            data.append(float(sales))
         else :
             order_list.append({
                 'daypart' : DAYPART_CHOICES[i],
                 'count' : 0,
                 'sales' : 0,
             })
+            labels.append(DAYPART_CHOICES[i])
+            data.append(0)
         i += 1
     
     print(data)
-    return render(request, 'reports/daypart_report.html', {'reports' : order_list, 'total_sales': total_sales})
+    return render(request, 'reports/daypart_report.html', {'reports' : order_list, 'total_sales': total_sales,'labels':labels, 'data':data})
 ################################### AUTH SECTION ######################################################################
 
 def signup(request) :
