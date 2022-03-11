@@ -1,14 +1,39 @@
+
+.body {
+    margin: auto;
+    font-size: 14px;
+    
+}
+
+
 .topnav {
-    background-color: #a685fa;
+    background-color: #49498d;
 }
 
 .navbar-brand {
     font-family: 'Arvo', serif;
+    
 }
 
-.body{
-    margin: auto;
-    font-size: 14px;
+.logo {
+    color: white;
+    
+}
+.login_button {
+    color: white ;
+}
+
+.my-bread {
+    background-color: #d6d6ef;
+}
+
+.my-nav-link {
+    color: aliceblue;
+}
+.my-nav-link:hover  {
+    color: black;
+    
+    
 }
 
 .home-banner 

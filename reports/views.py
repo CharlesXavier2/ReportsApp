@@ -19,6 +19,8 @@ from .utils import MONTH_CHOICES, YEAR_CHOICES, DAYPART_CHOICES, DAYPART_RANGES
 
 from .models import Category, SubCategory, Item, Order, OrderItem, Customer
 from .forms import OrderItemForm, OrderForm, SignUpForm, LoginForm, DayWiseForm, CustomerUpdateForm
+
+
 def home(request) :
     c = Customer.objects.all()
     print(c)
@@ -91,8 +93,11 @@ def order_item(request) :
 
 class SelectItems(View) :
     items = Item.objects.all()
-    def get(self, request, *args, **kwargs) :
-        
+    def get(self, request, pk=None) :
+        if pk :
+            
+            items = Item.objects.filter(subcategory_id = pk)
+            return render(request, 'reports/order_item.html', {'items': items})
         return render(request, 'reports/order_item.html', {'items': self.items})
 
     def post(self, request, *args, **kwargs) :
@@ -203,16 +208,18 @@ def day_wise_report(request):
             total_sales = 0
             total_orders = 0
             if fm.is_valid():
-                day = 1
+                
                 month = fm.cleaned_data['month']
                 year = fm.cleaned_data['year']
-                while day <= 31:
-                    queryset = Order.objects.filter(
-                        created_at__month=month, created_at__year=year, created_at__day=day)
-                    if queryset.exists():
-                        orders[day] = queryset
-                    else : orders[day] =""
-                    day += 1
+                queryset = Order.objects.filter(created_at__month=month, created_at__year=year)
+                
+                for order in queryset :
+                    day = order.created_at.day
+                    if order.created_at.day not in orders :
+                        orders[day] = [order]
+                    else :
+                        
+                        orders[day].append(order)
                 
                 for day, list_orders in orders.items():
                     day_format = str(day) + ' ' +MONTH_CHOICES[int(month)]

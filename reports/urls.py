@@ -19,6 +19,7 @@ urlpatterns = [
     path('reports/daypart/', views.daypart_report, name='daypart_reports'),
 
     path('items/', views.SelectItems.as_view(), name='order_item'),
+    path('items/<int:pk>', views.SelectItems.as_view(), name='order_item'),
     path('items/order/', views.OrderView.as_view(), name='order'),
 
     path('signup/', views.signup, name='signup'),

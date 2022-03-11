@@ -20,20 +20,27 @@
 
     
   </head>
-  <body>
+  <body class="body-design">
     {% block body %}
-    <nav class="navbar navbar-expand-sm navbar-light topnav" style="background-color: #ececf3;">
+    <nav class="navbar navbar-expand-sm navbar-light topnav" >
         <div class="container">
-            <a class="navbar-brand" href='#'>Sales Reporting</a>
+            <a class="navbar-brand logo" href="{% url 'home'  %}">
+              <span class="logo">Kitchen</span>
+            </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainMenu" aria-controls="mainMenu" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
             </button>
+            
             <div class="collapse navbar-collapse" id="mainMenu">
+              <a class="nav-link my-nav-link" href="{% url 'order_item'  %}">Select Item</a>
+              {% if user.is_staff == True %}
+            <a class="nav-link my-nav-link" href="{% url 'reports' %}">View Reports</a>
+        {% endif %}
   {% if user.is_authenticated %}
               <ul class="navbar-nav ml-auto">
                 <li class="nav-item dropdown">
                   <a class="nav-link dropdown-toggle" href="#" id="userMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  {{ user.username }}
+                  <span class="my-nav-link">{{ user.username }}</span>
                   </a>
                   <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <a class="dropdown-item" href="{% url 'customer' %}">My Account</a>
@@ -46,7 +53,8 @@
               </ul>
   {% else %}
               <form class="form-inline ml-auto">
-                <a href="{% url 'login' %}?next={{request.path}}" class="btn btn-outline-secondary">Log in</a>
+                
+                <a href="{% url 'login' %}?next={{request.path}}" class="btn btn-outline-secondary login_button">Log in</a>
                 <a href="{% url 'signup' %}" class="btn btn-primary ml-2">Sign up</a>
         </form>
   {% endif %}
@@ -57,7 +65,7 @@
 
     
     <div class="container">
-        <ol class="breadcrumb my-4">
+        <ol class="breadcrumb my-4 my-bread">
             {% block breadcrumb %}
             {% endblock %}
         </ol>
