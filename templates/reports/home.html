@@ -12,9 +12,9 @@
 <div class="card bg-dark text-white justify-content-center">
     <img src="{% static 'img/home-back.jpeg' %}" class="img-fluid home-img" alt="Responsive image">
     <div class="card-img-overlay">
-        <div class="container mb-4">
+        <!-- <div class="container mb-4">
         <h1 class="h-primary">Welcome to Abhinav's Kitchen</h1>
-        </div> 
+        </div>  -->
         <div class="container mb-4">
             <a href="{% url 'order_item' %}"><button type="button" class="btn btn-light homebtn1">Order Now</button></a>
         {% if user.is_staff == True %}
