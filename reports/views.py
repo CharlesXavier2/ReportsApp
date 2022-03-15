@@ -343,6 +343,25 @@ def subcat_report(request) :
     else :
         return redirect('login')
 
+def test_view(request) :
+    user = request.user
+    orders = Order.objects.all()
+    order_count = 0
+    total_sales = 0
+    reports = []
+    for order in orders :
+        order_list = order.get_item_sales()
+        for o in order_list :
+            
+            reports.append(o)
+    for report in reports :
+        order_count += report['count']
+        total_sales += report['sales']  
+    
+    print(order_count, total_sales)
+
+    
+    return render(request, 'reports/test.html', {'reports': reports})
 def daypart_report(request) :
     #data = Order.m_objects.get_day_set(1)
     data = Order.objects.values('created_at__day').annotate(x = Sum('items__item__price'))

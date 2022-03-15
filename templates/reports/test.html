@@ -1,0 +1,17 @@
+{% extends 'reports/base.html' %}
+{% load static %}
+
+
+{% block breadcrumb %}
+<li class="breadcrumb-item active">Restaurant</li>
+{% endblock %}
+
+{% block content %}
+<p>{{reports}}</p>
+{% for report in reports %}
+<ul>
+    <li>{{report.count}}</li>
+</ul>
+
+{% endfor %}
+{% endblock %}

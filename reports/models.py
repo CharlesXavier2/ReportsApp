@@ -67,8 +67,8 @@ class Order(models.Model) :
     address =  models.CharField(max_length=300, null=True)
     contact = models.CharField(max_length=10, null= True)
 
-    objects = models.Manager()
-    m_objects = OrderManager()
+    # objects = models.Manager()
+    # m_objects = OrderManager()
     def get_total_price(self) :
         total = 0
         for order_item in self.items.all() :
@@ -85,6 +85,18 @@ class Order(models.Model) :
         data = ""
         for oi in self.items.all() :
             data += oi.item.name + "-" + str(oi.quantity) + ","
+        return data
+
+    def get_item_sales(self) :
+        data= []
+        for oi in self.items.all() :
+            id = oi.item.subcategory.id
+            name = oi.item.subcategory.name
+            # if id not in data :
+            data.append({'name': name , 'count':oi.quantity, 'sales': oi.item.price * oi.quantity}) 
+            # else :
+            #     data[id].count += oi.quantity
+            #     data[id].sales += oi.item.price * oi.quantity
         return data
 
 
