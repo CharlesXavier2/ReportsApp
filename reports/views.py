@@ -10,7 +10,7 @@ from django.utils import timezone
 from django.db.models import Count
 from django.views.generic.base import View
 from django.contrib import messages
-from django.db.models import Sum
+from django.db.models import Sum, Count
 from django.utils import timezone
 
 from .utils import MONTH_CHOICES, YEAR_CHOICES, DAYPART_CHOICES, DAYPART_RANGES
@@ -211,6 +211,11 @@ def day_wise_report(request):
                 
                 month = fm.cleaned_data['month']
                 year = fm.cleaned_data['year']
+                # print(month,year)
+                # demoqueryset = Order.objects.filter(created_at__month=month, created_at__year=year)
+                # dataset = demoqueryset.values('created_at__month').annotate(count=Count('created_at'))
+                # for order in dataset :
+                #     print(order)
                 queryset = Order.objects.filter(created_at__month=month, created_at__year=year)
                 
                 for order in queryset :
